@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float } from '@react-three/drei'
-import { useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import type { Group, Mesh } from 'three'
 
 function CoreMesh() {
@@ -21,7 +21,7 @@ function CoreMesh() {
     <group ref={groupRef}>
       <Float speed={1.2} rotationIntensity={0.25} floatIntensity={0.35}>
         <mesh ref={torusRef} position={[0, 0.35, 0]}>
-          <torusKnotGeometry args={[0.58, 0.2, 180, 28]} />
+          <torusKnotGeometry args={[0.58, 0.2, 120, 16]} />
           <meshStandardMaterial color="#89b4dc" metalness={0.45} roughness={0.25} />
         </mesh>
       </Float>
@@ -41,17 +41,48 @@ function CoreMesh() {
       </Float>
 
       <mesh position={[0, -0.95, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.05, 1.22, 56]} />
+        <ringGeometry args={[1.05, 1.22, 48]} />
         <meshStandardMaterial color="#5f86aa" emissive="#3f6382" emissiveIntensity={0.35} />
       </mesh>
     </group>
   )
 }
 
+function canUseWebGL() {
+  try {
+    const canvas = document.createElement('canvas')
+    return Boolean(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+  } catch {
+    return false
+  }
+}
+
 export function PortfolioThreeHero() {
+  const [enabled, setEnabled] = useState(false)
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || !canUseWebGL()) {
+      return
+    }
+    const timer = window.setTimeout(() => setEnabled(true), 500)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  if (!enabled) {
+    return <div className="three-hero three-hero--fallback" aria-hidden />
+  }
+
   return (
     <div className="three-hero" aria-hidden>
-      <Canvas camera={{ position: [0, 0.4, 3.1], fov: 44 }} dpr={[1, 1.8]}>
+      <Canvas
+        camera={{ position: [0, 0.4, 3.1], fov: 44 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false }}
+        onCreated={({ gl }) => {
+          gl.setClearColor('#0b1219')
+        }}
+      >
         <color attach="background" args={['#0b1219']} />
         <fog attach="fog" args={['#0b1219', 3.5, 7]} />
         <ambientLight intensity={0.8} />

@@ -15,6 +15,7 @@ import {
   type SceneId,
 } from './data/siteContent'
 import { BinaryRain } from './components/BinaryRain'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import './styles.css'
 
 const PortfolioThreeHero = lazy(async () => {
@@ -405,9 +406,11 @@ function App() {
             </div>
             <div className="intro-vehicle">
               <div className="intro-cockpit glass-panel">
-                <Suspense fallback={<div className="three-hero three-hero--fallback" />}>
-                  <PortfolioThreeHero />
-                </Suspense>
+                <ErrorBoundary fallback={<div className="three-hero three-hero--fallback" />}>
+                  <Suspense fallback={<div className="three-hero three-hero--fallback" />}>
+                    <PortfolioThreeHero />
+                  </Suspense>
+                </ErrorBoundary>
                 <div className="intro-cockpit-overlay">
                   <img alt="Chintan Panchal" className="intro-avatar" src="/avatar-realistic.png" />
                   <div className="intro-wheel" />
