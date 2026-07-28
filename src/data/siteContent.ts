@@ -80,10 +80,9 @@ export const profile = {
   /** Adobe / visual portfolio */
   adobePortfolioUrl: 'https://chintanpanchal63.myportfolio.com',
   /**
-   * Live Vercel URL for this site — update after each production deploy.
-   * Keep in sync with Chintan-Panchal-Resume.md (PORTFOLIO_LIVE_URL).
+   * Live Vercel URL — keep in sync with Chintan-Panchal-Resume.md / .html
    */
-  portfolioUrl: 'PORTFOLIO_LIVE_URL',
+  portfolioUrl: 'https://portfolio-pied-nu-0jzr70914a.vercel.app',
   githubPortfolioRepo: 'https://github.com/cpanchal112233-svg/portfolio-',
   githubTaruRepo: 'https://github.com/cpanchal112233-svg/TARU-',
 }
