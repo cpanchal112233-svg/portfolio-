@@ -43,6 +43,10 @@ export type SectionMeta = {
   avatarLine: string
   guideCue: string
   focusHint: string
+  gesture: string
+  expression: string
+  avatarSrc: string
+  skillTags: string[]
 }
 
 export const profile = {
@@ -74,45 +78,65 @@ export const sections: SectionMeta[] = [
     nav: 'About',
     title: 'About',
     subtitle: 'Who I am and how I work.',
-    avatarLine: 'Start here. I am your guide through this timeline — engineer, builder, AI product partner.',
+    avatarLine: 'Hey — welcome in. I am your guide through this timeline: engineer, builder, AI product partner.',
     guideCue: 'Identity lock',
-    focusHint: 'Read the intro, then follow me down.',
+    focusHint: 'Read the intro, then follow my wave down.',
+    gesture: 'Welcome wave',
+    expression: 'Friendly · open',
+    avatarSrc: '/avatar-about.jpg',
+    skillTags: ['MSc CS', 'AWS', 'Builder'],
   },
   {
     id: 'projects',
     nav: 'Projects',
     title: 'Selected work',
     subtitle: 'Products I have designed, built, and shipped.',
-    avatarLine: 'Pause on TARU first — that is the flagship AI system. Then scan ServeNow and RetailOS.',
+    avatarLine: 'Look here — TARU is the flagship AI system. Then scan ServeNow and RetailOS with me.',
     guideCue: 'Mission archive',
-    focusHint: 'Look left — open TARU when you are ready.',
+    focusHint: 'I am pointing at the work that defines me.',
+    gesture: 'Point & present',
+    expression: 'Proud · focused',
+    avatarSrc: '/avatar-projects.jpg',
+    skillTags: ['TARU', 'Flutter', 'Firebase'],
   },
   {
     id: 'skills',
     nav: 'Skills',
     title: 'Skills',
     subtitle: 'The toolkit I use in production.',
-    avatarLine: 'These are my live tools: Flutter, Firebase, React, Next.js, Laravel, AWS.',
+    avatarLine: 'These are my live tools — Flutter, Firebase, React, Next.js, Laravel, AWS — held open for you.',
     guideCue: 'Capability grid',
-    focusHint: 'Scan Mobile & AI, then Cloud & delivery.',
+    focusHint: 'Watch the skill chips orbit as I present them.',
+    gesture: 'Skill showcase',
+    expression: 'Confident · sharp',
+    avatarSrc: '/avatar-skills.jpg',
+    skillTags: ['React', 'Flutter', 'AWS', 'Laravel'],
   },
   {
     id: 'experience',
     nav: 'Experience',
     title: 'Experience',
     subtitle: 'Roles, delivery, and education.',
-    avatarLine: 'Track the timeline: ERP intern → ops → design systems → MSc Computer Science.',
+    avatarLine: 'Follow the timeline with me: ERP intern → ops → design systems → MSc Computer Science.',
     guideCue: 'Career signal',
-    focusHint: 'Follow the teal rail down the years.',
+    focusHint: 'Thoughtful mode — every stop taught a skill.',
+    gesture: 'Reflect & track',
+    expression: 'Thoughtful · calm',
+    avatarSrc: '/avatar-experience.jpg',
+    skillTags: ['ERP', 'UX', 'Cloud'],
   },
   {
     id: 'contact',
     nav: 'Contact',
     title: 'Contact',
     subtitle: 'Let’s talk about roles, builds, or partnerships.',
-    avatarLine: 'Transmission open. Email or LinkedIn — I answer builders and recruiters alike.',
+    avatarLine: 'Transmission open. Come closer — email or LinkedIn, I answer builders and recruiters alike.',
     guideCue: 'Comm link',
-    focusHint: 'Choose a channel and send the ping.',
+    focusHint: 'Arms open — pick a channel and send the ping.',
+    gesture: 'Invite connect',
+    expression: 'Warm · inviting',
+    avatarSrc: '/avatar-contact.jpg',
+    skillTags: ['Email', 'GitHub', 'LinkedIn'],
   },
 ]
 

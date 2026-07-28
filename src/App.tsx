@@ -7,6 +7,7 @@ import {
   useTransform,
 } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
+import { AnimatedAvatar } from './components/AnimatedAvatar'
 import {
   certifications,
   educationHistory,
@@ -323,38 +324,12 @@ function App() {
               <span className="guide-beam-tip" />
             </motion.div>
 
-            <div className="avatar-pod">
-              <motion.div
-                className="avatar-ring"
-                style={{ rotate: ringSpin }}
-                aria-hidden
-              />
-              <motion.div
-                className="avatar-ring avatar-ring-delayed"
-                style={{ rotate: ringSpinReverse }}
-                aria-hidden
-              />
-              <motion.div
-                className="avatar-frame"
-                animate={{
-                  boxShadow: [
-                    '0 0 0 1px rgba(61, 224, 208, 0.25), 0 24px 60px rgba(0,0,0,0.45)',
-                    '0 0 28px 2px rgba(61, 224, 208, 0.35), 0 24px 60px rgba(0,0,0,0.45)',
-                    '0 0 0 1px rgba(61, 224, 208, 0.25), 0 24px 60px rgba(0,0,0,0.45)',
-                  ],
-                }}
-                transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <motion.img
-                  alt="AI avatar of Chintan Panchal"
-                  className="avatar-full"
-                  src="/avatar-realistic.jpg"
-                  animate={{ y: [0, -8, 0], rotate: [0, 0.8, 0] }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-                />
-                <div className="avatar-hologlow" aria-hidden />
-              </motion.div>
-            </div>
+            <AnimatedAvatar
+              section={activeSection}
+              ringSpin={ringSpin}
+              ringSpinReverse={ringSpinReverse}
+              scrollProgress={smoothProgress}
+            />
 
             <AnimatePresence mode="wait">
               <motion.div
