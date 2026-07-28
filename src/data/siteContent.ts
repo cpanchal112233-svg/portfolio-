@@ -41,6 +41,8 @@ export type SectionMeta = {
   title: string
   subtitle: string
   avatarLine: string
+  guideCue: string
+  focusHint: string
 }
 
 export const profile = {
@@ -72,35 +74,45 @@ export const sections: SectionMeta[] = [
     nav: 'About',
     title: 'About',
     subtitle: 'Who I am and how I work.',
-    avatarLine: 'MSc Computer Science · AWS certified · building AI products that ship.',
+    avatarLine: 'Start here. I am your guide through this timeline — engineer, builder, AI product partner.',
+    guideCue: 'Identity lock',
+    focusHint: 'Read the intro, then follow me down.',
   },
   {
     id: 'projects',
     nav: 'Projects',
     title: 'Selected work',
     subtitle: 'Products I have designed, built, and shipped.',
-    avatarLine: 'Flagship: TARU — an AI health companion on Flutter + Firebase.',
+    avatarLine: 'Pause on TARU first — that is the flagship AI system. Then scan ServeNow and RetailOS.',
+    guideCue: 'Mission archive',
+    focusHint: 'Look left — open TARU when you are ready.',
   },
   {
     id: 'skills',
     nav: 'Skills',
     title: 'Skills',
     subtitle: 'The toolkit I use in production.',
-    avatarLine: 'React · Next.js · Flutter · Firebase · Laravel · AWS · TypeScript.',
+    avatarLine: 'These are my live tools: Flutter, Firebase, React, Next.js, Laravel, AWS.',
+    guideCue: 'Capability grid',
+    focusHint: 'Scan Mobile & AI, then Cloud & delivery.',
   },
   {
     id: 'experience',
     nav: 'Experience',
     title: 'Experience',
     subtitle: 'Roles, delivery, and education.',
-    avatarLine: 'ERP systems, measurable web outcomes, and cloud-aware delivery.',
+    avatarLine: 'Track the timeline: ERP intern → ops → design systems → MSc Computer Science.',
+    guideCue: 'Career signal',
+    focusHint: 'Follow the teal rail down the years.',
   },
   {
     id: 'contact',
     nav: 'Contact',
     title: 'Contact',
     subtitle: 'Let’s talk about roles, builds, or partnerships.',
-    avatarLine: 'Open to UK software engineering roles and builder partnerships.',
+    avatarLine: 'Transmission open. Email or LinkedIn — I answer builders and recruiters alike.',
+    guideCue: 'Comm link',
+    focusHint: 'Choose a channel and send the ping.',
   },
 ]
 
