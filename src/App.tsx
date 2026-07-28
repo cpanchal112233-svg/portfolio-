@@ -57,14 +57,12 @@ function App() {
 
   // Scroll speed bends the whole stream, so fast flicks feel like warp travel.
   const velocity = useVelocity(scrollYProgress)
-  const skew = useSpring(useTransform(velocity, [-2.5, 0, 2.5], [2.6, 0, -2.6]), {
+  // Skew only: scaling the stream would shift every line by a different amount
+  // and blur the text mid-scroll.
+  const skew = useSpring(useTransform(velocity, [-2.5, 0, 2.5], [2.2, 0, -2.2]), {
     stiffness: 220,
     damping: 34,
   })
-  const streamScale = useSpring(
-    useTransform(velocity, [-2.5, 0, 2.5], [0.985, 1, 0.985]),
-    { stiffness: 200, damping: 30 }
-  )
   const hudWidth = useTransform(smoothProgress, [0, 1], ['0%', '100%'])
 
   const jumpTo = (id: SectionId) => {
@@ -140,7 +138,7 @@ function App() {
       </header>
 
       <div className="deck-body">
-        <motion.main className="stream" style={{ skewY: skew, scale: streamScale }}>
+        <motion.main className="stream" style={{ skewY: skew }}>
           {beatsBySection.map(({ section, items }) => (
             <section className="chapter" id={section.id} key={section.id}>
               <div className="chapter-head">

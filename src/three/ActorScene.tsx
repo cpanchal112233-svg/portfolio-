@@ -25,11 +25,11 @@ const EMPHASIS_ORDER: Emphasis[] = ['welcome', 'point', 'present', 'reflect', 'i
  * whole figure, head to shoes, inside the frame.
  */
 const STAGING: Record<Emphasis, { lean: number; orbit: number; height: number; distance: number }> = {
-  welcome: { lean: 0.0, orbit: 0.0, height: 0.62, distance: 6.0 },
-  point: { lean: -0.14, orbit: -0.24, height: 0.5, distance: 5.7 },
-  present: { lean: 0.05, orbit: 0.15, height: 0.68, distance: 5.85 },
-  reflect: { lean: -0.05, orbit: 0.28, height: 0.9, distance: 6.2 },
-  invite: { lean: 0.02, orbit: -0.1, height: 0.45, distance: 5.6 },
+  welcome: { lean: 0.0, orbit: 0.0, height: 0.5, distance: 6.7 },
+  point: { lean: -0.14, orbit: -0.24, height: 0.42, distance: 6.5 },
+  present: { lean: 0.05, orbit: 0.15, height: 0.55, distance: 6.6 },
+  reflect: { lean: -0.05, orbit: 0.28, height: 0.8, distance: 7.0 },
+  invite: { lean: 0.02, orbit: -0.1, height: 0.4, distance: 6.45 },
 }
 
 const ACCENT = new THREE.Color('#3de0d0')
@@ -343,7 +343,9 @@ function CameraRig({ progressRef, emphasis }: { progressRef: { current: number }
 
     // Orbit and dolly through the whole scroll, biased by the current mood.
     const orbit = staging.orbit + Math.sin(progress * Math.PI * 2) * 0.22
-    const distance = staging.distance - progress * 0.35
+    // Keep the dolly small: the visible height is distance * tan(fov / 2), and
+    // creeping any closer starts cropping the actor's head.
+    const distance = staging.distance - progress * 0.22
     const height = staging.height + Math.sin(progress * Math.PI) * 0.22
 
     const desiredX = Math.sin(orbit) * distance
@@ -366,7 +368,7 @@ function CameraRig({ progressRef, emphasis }: { progressRef: { current: number }
 export function ActorScene({ progressRef, emphasis, beatKey, beatIndex }: StageInput) {
   return (
     <Canvas
-      camera={{ position: [0, 0.62, 6.0], fov: 34, near: 0.1, far: 60 }}
+      camera={{ position: [0, 0.5, 6.7], fov: 34, near: 0.1, far: 60 }}
       dpr={[1, 1.75]}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ width: '100%', height: '100%' }}
