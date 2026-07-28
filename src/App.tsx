@@ -20,6 +20,7 @@ import {
   type SectionId,
 } from './data/narrative'
 import { useFocusedBeat } from './hooks/useFocusedBeat'
+import { useHudHeight } from './hooks/useHudHeight'
 
 const EMPHASIS_LABEL = {
   welcome: 'Greeting',
@@ -41,6 +42,7 @@ function App() {
   const activeSection: SectionId = focused.section
 
   const progressRef = useRef(0)
+  const hudRef = useHudHeight<HTMLElement>()
   const [progressPct, setProgressPct] = useState(0)
 
   const { scrollYProgress } = useScroll()
@@ -97,7 +99,7 @@ function App() {
         />
       </AnimatePresence>
 
-      <header className="hud">
+      <header className="hud" ref={hudRef}>
         <div className="hud-row">
           <a className="hud-brand" href="#about">
             <span className="hud-mark">CP</span>
