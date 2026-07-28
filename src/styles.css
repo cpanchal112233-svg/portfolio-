@@ -314,13 +314,15 @@ img {
 }
 
 /* Scroll room at both ends so the very first and last lines can still reach
-   the reading line the actor narrates from. */
+   the reading line the actor narrates from. The opening lead-in is measured from
+   that line (mid-viewport) rather than capped in rem, otherwise the headline
+   starts above it on tall screens and is never the line the actor greets you on. */
 .chapter:first-of-type {
-  padding-top: clamp(1rem, 18vh, 9rem);
+  padding-top: max(1rem, calc(50vh - 240px));
 }
 
 .chapter:last-of-type {
-  padding-bottom: clamp(6rem, 40vh, 22rem);
+  padding-bottom: max(6rem, calc(50vh - 100px));
 }
 
 .chapter-head {
@@ -840,10 +842,14 @@ img {
     min-height: 150px;
   }
 
-  /* The actor already occupies the top of a stacked screen, so the intro does
-     not need extra lead-in space. */
+  /* Stacked layout: the reading line sits 42% down the text column left below the
+     actor, so the lead-in is measured from there instead of from mid-viewport.
+     The 150px allows for the chapter header, the grid gap, and half a line. */
   .chapter:first-of-type {
-    padding-top: clamp(0.5rem, 4vh, 2rem);
+    padding-top: max(
+      0.5rem,
+      calc(0.42 * (100vh - var(--hud-h) - var(--stage-h)) - 150px)
+    );
   }
 
   /* A narrow stage puts the corner badges either side of the actor's head, so
@@ -857,12 +863,24 @@ img {
     display: none;
   }
 
+  /* Wrapping the chapter chips would stack the HUD three rows deep and steal the
+     reading column, so the nav becomes a single swipeable strip instead. */
   .hud-nav {
     order: 3;
     width: 100%;
     justify-content: flex-start;
+    flex-wrap: nowrap;
     overflow-x: auto;
+    scrollbar-width: none;
     padding-bottom: 0.2rem;
+  }
+
+  .hud-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hud-chip {
+    flex-shrink: 0;
   }
 
   .hud-row {
@@ -920,6 +938,11 @@ img {
 
   .chapter-head {
     top: calc(var(--hud-h) + 0.5rem);
+  }
+
+  /* Side by side again, so the reading line is back at mid-viewport. */
+  .chapter:first-of-type {
+    padding-top: max(1rem, calc(50vh - 240px));
   }
 
   .speech-bars {
