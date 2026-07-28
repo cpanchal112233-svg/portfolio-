@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chintan Panchal — CV (UK)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1f2e;
+      --muted: #4a5568;
+      --line: #e2e8f0;
+      --accent: #0f766e;
+      --paper: #fafaf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    .page {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 14mm 16mm;
+    }
+    header {
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.25rem 0;
+      color: var(--ink);
+    }
+    .tagline {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0 0 0.35rem 0;
+    }
+    .intent {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.35;
+    }
+    .contact {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .contact a { color: var(--accent); text-decoration: none; }
+    .contact a:hover { text-decoration: underline; }
+
+    h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin: 1.1rem 0 0.45rem 0;
+      padding-bottom: 0.2rem;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 0.98rem;
+      margin: 0.65rem 0 0.15rem 0;
+      font-weight: 600;
+    }
+    .meta {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin: 0 0 0.35rem 0;
+    }
+    p { margin: 0 0 0.45rem 0; color: var(--muted); }
+    ul {
+      margin: 0.2rem 0 0.5rem 1.15rem;
+      padding: 0;
+      color: var(--muted);
+    }
+    li { margin-bottom: 0.28rem; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      gap: 0.25rem 0.75rem;
+      font-size: 0.92rem;
+    }
+    .skills-grid strong { color: var(--ink); font-weight: 600; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1.25rem;
+    }
+    .footnote {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+    }
+    @media print {
+      body { background: #fff; }
+      .page { padding: 12mm 14mm; max-width: none; }
+      a { color: var(--ink) !important; text-decoration: none; }
+      h2 { break-after: avoid; }
+      h3, .block { break-inside: avoid; }
+    }
+    @page { size: A4; margin: 12mm; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Chintan Panchal</h1>
+      <p class="tagline">Software Engineer · MSc Computer Science · AWS Certified Cloud Practitioner</p>
+      <p class="intent">Open to software engineering roles and builder partnerships in London / UK — hybrid, remote, or on-site. Ships constantly across web, mobile, and AI-backed products.</p>
+      <p class="contact">
+        508 Ripple Road, Barking, IG11 9RY, UK<br />
+        <a href="mailto:chintanpanchal63@gmail.com">chintanpanchal63@gmail.com</a>
+        &nbsp;·&nbsp; +44 7880 039122
+        &nbsp;·&nbsp;
+        <a href="https://github.com/cpanchal112233-svg">GitHub</a>
+        &nbsp;·&nbsp;
+        <a href="https://www.linkedin.com/in/uncodeworld-chintan">LinkedIn</a>
+        &nbsp;·&nbsp;
+        <a id="portfolio-link" href="https://portfolio-pied-nu-0jzr70914a.vercel.app">Portfolio</a>
+        &nbsp;·&nbsp;
+        <a href="https://www.uncodeworld.com">uncodeworld.com</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Professional profile</h2>
+      <p>
+        Computer Science postgraduate who <strong style="color:var(--ink)">ships full-stack and mobile products end to end</strong> —
+        from auth and data models through polished UI and cloud deployment. Background in
+        <strong style="color:var(--ink)">ERP-style systems</strong> (Laravel, MySQL), modern web stacks
+        (<strong style="color:var(--ink)">React</strong>, <strong style="color:var(--ink)">Next.js</strong>,
+        <strong style="color:var(--ink)">TypeScript</strong>, <strong style="color:var(--ink)">PostgreSQL</strong>),
+        and currently building <strong style="color:var(--ink)">TARU</strong>, an
+        <strong style="color:var(--ink)">AI-powered health companion</strong> (Flutter + Firebase).
+        Strong on discovery, implementation, testing, documentation, and stakeholder handover.
+      </p>
+      <p><strong style="color:var(--ink)">LinkedIn top skills:</strong> Dashboard building · Branding · Product development</p>
+    </section>
+
+    <section>
+      <h2>Technical skills</h2>
+      <div class="skills-grid">
+        <strong>Front end</strong>
+        <span>React, Next.js, TypeScript, JavaScript, HTML/CSS, Tailwind CSS, Vite</span>
+        <strong>Mobile</strong>
+        <span>Flutter, Dart</span>
+        <strong>Back end</strong>
+        <span>Node.js, REST, Prisma, PHP, Laravel, Ruby on Rails, Flask, Django</span>
+        <strong>Data</strong>
+        <span>MySQL, PostgreSQL, SQL, Firebase Auth, Cloud Firestore, Firebase Storage</span>
+        <strong>Cloud</strong>
+        <span>AWS (Cloud Practitioner certified), Azure, Vercel, CI/CD, Git / GitHub</span>
+        <strong>AI &amp; product</strong>
+        <span>LLM-assisted product design, health-data workflows, assistant system design</span>
+        <strong>Design</strong>
+        <span>Adobe Photoshop, Illustrator, InDesign; responsive web graphics; SEO basics</span>
+        <strong>Quality</strong>
+        <span>Auth.js / NextAuth, Zod, testing &amp; debugging, performance tuning</span>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Employment history</h2>
+
+      <h3>UK Digi Tech Ltd — Graphic Designer</h3>
+      <p class="meta">June 2025 – Present · London area, UK</p>
+      <ul>
+        <li>Web-ready graphics and layouts; align creative work with marketing and development for production-ready delivery.</li>
+        <li>Optimise assets for performance and responsiveness across devices.</li>
+        <li>Led design for a major client site — ~25% increase in user engagement and stronger lead generation.</li>
+        <li>Adobe Creative Suite (Photoshop, Illustrator, InDesign).</li>
+      </ul>
+
+      <h3>The Study Room Tuition Centre — Assistant Manager</h3>
+      <p class="meta">January 2023 – November 2023 · Greater London, UK</p>
+      <ul>
+        <li>Scheduling (trials, make-ups), parent/student communications, records and enrolment.</li>
+        <li>Recruitment, training, mentoring; budgeting and spend monitoring assistance.</li>
+        <li>Programme and strategy input to improve learning outcomes.</li>
+      </ul>
+
+      <h3>The Study Room Tuition Centre — Web Developer Intern</h3>
+      <p class="meta">June 2022 – January 2023 · London, UK</p>
+      <ul>
+        <li>End-to-end contribution to an ERP-style system on Laravel; data integration and UX.</li>
+        <li>PHP (Laravel), MySQL, Apache; testing, debugging, and stability-focused delivery.</li>
+        <li>Structured data gathering; integrated datasets with integrity and clear access patterns.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Selected projects</h2>
+      <div class="two-col">
+        <div>
+          <h3>TARU <span style="font-weight:500;color:var(--muted)">(in progress)</span></h3>
+          <p>
+            AI-powered health companion (Flutter + Firebase). Auth, Firestore profiles, app shell shipped;
+            roadmap: report uploads, LLM assistant, routines, progress insights.
+            <a href="https://github.com/cpanchal112233-svg/TARU-">GitHub</a>
+          </p>
+          <h3>ServeNow</h3>
+          <p>Field-service: booking, invoicing, dispatch, technicians (Next.js, TypeScript, Auth.js, Prisma, PostgreSQL).</p>
+          <h3>Interactive portfolio</h3>
+          <p>
+            React/Vite cinematic tour (Three.js, Framer Motion).
+            <a href="https://github.com/cpanchal112233-svg/portfolio-">Repo</a>
+            · <a id="portfolio-link-2" href="https://portfolio-pied-nu-0jzr70914a.vercel.app">Live</a>
+          </p>
+          <h3>uncodeworld</h3>
+          <p>Premium services site: React, Vite, Tailwind, Three.js / R3F, Framer Motion, GSAP.</p>
+        </div>
+        <div>
+          <h3>RetailOS</h3>
+          <p>E-commerce &amp; loyalty: Next.js, Prisma, PostgreSQL, Auth.js.</p>
+          <h3>StudioFlow</h3>
+          <p>Client portal: Next.js, NestJS, Supabase — dashboards, files, billing.</p>
+          <h3>SmartClinic</h3>
+          <p>
+            Clinic flows: booking, portals, queues (Next.js, Postgres, NextAuth).
+            <a href="https://github.com/cpanchal112233-svg/Smart-clinic">GitHub</a>
+          </p>
+          <h3>Earlier</h3>
+          <p>Laravel school ERP; OpenCart; CodeIgniter booking; COLUMBUS (ML + web).</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <h3>MSc Computer Science (industrial placement)</h3>
+      <p class="meta">University of East London · May 2021 – May 2023</p>
+      <p>AI, Cloud Computing, Big Data, Advanced Software Engineering.</p>
+      <h3>BEng Computer Engineering</h3>
+      <p class="meta">Silver Oak College of Engineering &amp; Technology (GTU), Ahmedabad, India · Aug 2016 – Aug 2020</p>
+    </section>
+
+    <section>
+      <h2>Qualifications &amp; certifications</h2>
+      <ul>
+        <li><strong style="color:var(--ink)">AWS Certified Cloud Practitioner</strong> (Amazon Web Services)</li>
+        <li>Google Ads (AdWords) Essential Training</li>
+        <li>SEO Foundations · Content Marketing Foundations</li>
+        <li>Google Digital Unlocked — Fundamentals of Digital Marketing</li>
+        <li>Agile Development · DCB Bank Hackathon</li>
+      </ul>
+      <p><strong style="color:var(--ink)">Interests:</strong> Shipping product ideas (TARU), hackathons, cricket (former team captain), continuous learning in web, mobile, and AI.</p>
+      <p><strong style="color:var(--ink)">References:</strong> Available upon request.</p>
+    </section>
+
+    <p class="footnote">CV — July 2026 · United Kingdom · A4 · Print-friendly · Edit Markdown first, then sync this HTML</p>
+  </div>
+</body>
+</html>
