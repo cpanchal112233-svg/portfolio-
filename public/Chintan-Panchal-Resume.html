@@ -59,8 +59,9 @@
       font-size: 0.9rem;
       color: var(--muted);
     }
-    .contact a { color: var(--accent); text-decoration: none; }
-    .contact a:hover { text-decoration: underline; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    a:hover { text-decoration-thickness: 2px; }
+    .contact a { font-weight: 500; }
 
     h2 {
       font-family: "Fraunces", Georgia, serif;
@@ -110,13 +111,18 @@
       border-top: 1px solid var(--line);
     }
     @media print {
-      body { background: #fff; }
-      .page { padding: 12mm 14mm; max-width: none; }
-      a { color: var(--ink) !important; text-decoration: none; }
+      body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { padding: 10mm 12mm; max-width: none; }
+      /* Keep links visible and clickable in Save as PDF — never flatten to body ink. */
+      a {
+        color: var(--accent) !important;
+        text-decoration: underline !important;
+        text-underline-offset: 2px;
+      }
       h2 { break-after: avoid; }
       h3, .block { break-inside: avoid; }
     }
-    @page { size: A4; margin: 12mm; }
+    @page { size: A4; margin: 10mm; }
   </style>
 </head>
 <body>
@@ -130,11 +136,11 @@
         <a href="mailto:chintanpanchal63@gmail.com">chintanpanchal63@gmail.com</a>
         &nbsp;·&nbsp; +44 7880 039122
         &nbsp;·&nbsp;
-        <a href="https://github.com/cpanchal112233-svg">GitHub</a>
+        <a href="https://github.com/cpanchal112233-svg">github.com/cpanchal112233-svg</a>
         &nbsp;·&nbsp;
-        <a href="https://www.linkedin.com/in/uncodeworld-chintan">LinkedIn</a>
-        &nbsp;·&nbsp;
-        <a id="portfolio-link" href="https://portfolio-pied-nu-0jzr70914a.vercel.app">Portfolio</a>
+        <a href="https://www.linkedin.com/in/uncodeworld-chintan">linkedin.com/in/uncodeworld-chintan</a>
+        <br />
+        <a id="portfolio-link" href="https://portfolio-pied-nu-0jzr70914a.vercel.app">portfolio-pied-nu-0jzr70914a.vercel.app</a>
         &nbsp;·&nbsp;
         <a href="https://www.uncodeworld.com">uncodeworld.com</a>
       </p>
@@ -214,15 +220,15 @@
           <p>
             AI-powered health companion (Flutter + Firebase). Cross-platform mobile app with authentication,
             Cloud Firestore profiles, secure storage, and a production-ready UI for health information and habits.
-            <a href="https://github.com/cpanchal112233-svg/TARU-">GitHub</a>
+            <a href="https://github.com/cpanchal112233-svg/TARU-">github.com/cpanchal112233-svg/TARU-</a>
           </p>
           <h3>ServeNow</h3>
           <p>Field-service: booking, invoicing, dispatch, technicians (Next.js, TypeScript, Auth.js, Prisma, PostgreSQL).</p>
           <h3>Interactive portfolio</h3>
           <p>
-            React/Vite cinematic tour (Three.js, Framer Motion).
-            <a href="https://github.com/cpanchal112233-svg/portfolio-">Repo</a>
-            · <a id="portfolio-link-2" href="https://portfolio-pied-nu-0jzr70914a.vercel.app">Live</a>
+            React/Vite portfolio with a live AI presenter (Three.js, Framer Motion).
+            <a href="https://github.com/cpanchal112233-svg/portfolio-">github.com/cpanchal112233-svg/portfolio-</a>
+            · <a id="portfolio-link-2" href="https://portfolio-pied-nu-0jzr70914a.vercel.app">Live site</a>
           </p>
           <h3>uncodeworld</h3>
           <p>Premium services site: React, Vite, Tailwind, Three.js / R3F, Framer Motion, GSAP.</p>
@@ -235,7 +241,7 @@
           <h3>SmartClinic</h3>
           <p>
             Clinic flows: booking, portals, queues (Next.js, Postgres, NextAuth).
-            <a href="https://github.com/cpanchal112233-svg/Smart-clinic">GitHub</a>
+            <a href="https://github.com/cpanchal112233-svg/Smart-clinic">github.com/cpanchal112233-svg/Smart-clinic</a>
           </p>
           <h3>Earlier</h3>
           <p>Laravel school ERP; OpenCart; CodeIgniter booking; COLUMBUS (ML + web).</p>
