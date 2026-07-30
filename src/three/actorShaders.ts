@@ -3,26 +3,74 @@ export const actorVertexShader = /* glsl */ `
   uniform float uBreath;
   uniform float uLean;
   uniform float uPulse;
+  uniform float uActPhase;
+  uniform float uActType;
 
   varying vec2 vUv;
+
+  float region(float y, float lo, float hi) {
+    return smoothstep(lo, lo + 0.08, y) * (1.0 - smoothstep(hi - 0.08, hi, y));
+  }
 
   void main() {
     vUv = uv;
 
     vec3 p = position;
-    float h = uv.y; // 0 at the feet, 1 at the head
+    float h = uv.y;
+    float side = uv.x - 0.5;
+    float act = uActPhase;
+    float leftArm = smoothstep(0.05, 0.35, 0.5 - uv.x);
+    float rightArm = smoothstep(0.05, 0.35, uv.x - 0.5);
 
-    // Idle life: weight shift, chest rise, and a slow depth sway.
-    p.x += sin(uTime * 1.15 + h * 2.1) * 0.030 * h * uBreath;
-    p.y += sin(uTime * 1.70) * 0.014 * h * uBreath;
-    p.z += sin(uTime * 0.85 + h * 2.8) * 0.045 * h * uBreath;
+    float head = region(h, 0.78, 1.0);
+    float chest = region(h, 0.52, 0.82);
+    float arms = region(h, 0.48, 0.88) * (leftArm + rightArm);
+    float hips = region(h, 0.28, 0.52);
+    float legs = region(h, 0.0, 0.35);
 
-    // Lean into whatever line is being narrated.
-    p.x += uLean * h * h * 0.30;
+    // Presenter idle: subtle weight shift while speaking.
+    p.x += sin(uTime * 0.95 + h * 2.2) * 0.022 * h * uBreath;
+    p.y += sin(uTime * 1.55) * 0.014 * h * uBreath;
+    p.z += sin(uTime * 0.85 + h * 2.4) * 0.032 * h * uBreath;
 
-    // Reaction jolt whenever the focused line changes.
-    p.y += uPulse * 0.06 * h;
-    p.z += uPulse * 0.10 * smoothstep(0.2, 1.0, h);
+    // Presentation beats — gestures aim toward the slide deck on the left.
+    if (uActType < 0.5) {
+      // Opening: warm welcome, slight bow, face the audience.
+      p.y -= act * 0.04 * head;
+      p.z += act * 0.07 * chest;
+      p.x -= act * 0.05 * rightArm;
+    } else if (uActType < 1.5) {
+      // Point at slide: reach left, lean in, head follows finger.
+      p.x -= act * 0.16 * rightArm;
+      p.x -= act * 0.06 * chest;
+      p.z += act * 0.13 * chest;
+      p.x -= act * 0.03 * head;
+    } else if (uActType < 2.5) {
+      // Present data: both hands open toward the deck.
+      p.x -= act * 0.13 * arms;
+      p.z += act * 0.10 * chest;
+      p.y += act * 0.02 * chest;
+    } else if (uActType < 3.5) {
+      // Reflect: pause, tilt head, hand near chin.
+      p.x += act * 0.05 * head * sign(side + 0.001);
+      p.z -= act * 0.06 * chest;
+      p.x -= act * 0.04 * rightArm;
+    } else if (uActType < 4.5) {
+      // Invite: step toward audience, open welcoming reach.
+      p.z += act * 0.15 * (chest + hips * 0.45);
+      p.x -= act * 0.07 * arms;
+      p.y -= act * 0.015 * legs;
+    } else {
+      // Emphasize key stat: punch gesture left on the beat.
+      float punch = sin(act * 3.14159);
+      p.x -= punch * 0.14 * rightArm;
+      p.z += punch * 0.10 * chest;
+      p.y -= punch * 0.03 * head;
+    }
+
+    p.x += uLean * h * h * 0.24;
+    p.y += uPulse * 0.05 * h;
+    p.z += uPulse * 0.08 * smoothstep(0.2, 1.0, h);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
   }
@@ -36,7 +84,9 @@ export const actorFragmentShader = /* glsl */ `
   uniform float uMix;
   uniform float uTime;
   uniform float uPulse;
+  uniform float uActPhase;
   uniform vec3 uAccent;
+  uniform vec3 uAccent2;
   uniform vec2 uTexel;
 
   varying vec2 vUv;
@@ -60,25 +110,22 @@ export const actorFragmentShader = /* glsl */ `
     vec2 uvA = vUv;
     vec2 uvB = vUv;
 
-    // Hologram tear while one pose dissolves into the next.
     float transition = 1.0 - abs(uMix * 2.0 - 1.0);
-    float tear = noise(vec2(vUv.y * 40.0, uTime * 6.0)) - 0.5;
-    uvA.x += tear * 0.05 * transition;
-    uvB.x += tear * 0.05 * transition;
+    float tear = noise(vec2(vUv.y * 32.0, uTime * 4.5)) - 0.5;
+    uvA.x += tear * 0.035 * transition;
+    uvB.x += tear * 0.035 * transition;
 
     vec4 poseA = texture2D(uTexA, uvA);
     vec4 poseB = texture2D(uTexB, uvB);
 
-    // Noise-driven dissolve so the swap reads as a rebuild, not a crossfade.
     float grain = noise(vUv * 7.0);
-    float blend = smoothstep(grain - 0.35, grain + 0.35, uMix);
+    float blend = smoothstep(grain - 0.30, grain + 0.30, uMix);
     vec4 color = mix(poseA, poseB, blend);
 
     if (color.a < 0.01) {
       discard;
     }
 
-    // Silhouette edge detection for the rim light.
     float aL = texture2D(uTexA, uvA - vec2(uTexel.x * 2.0, 0.0)).a;
     float aR = texture2D(uTexA, uvA + vec2(uTexel.x * 2.0, 0.0)).a;
     float aD = texture2D(uTexA, uvA - vec2(0.0, uTexel.y * 2.0)).a;
@@ -86,29 +133,17 @@ export const actorFragmentShader = /* glsl */ `
     float edge = clamp(color.a * 4.0 - (aL + aR + aD + aU), 0.0, 1.0);
 
     vec3 rgb = color.rgb;
+    rgb = mix(rgb, rgb * vec3(1.03, 1.04, 1.06), 0.25);
+    rgb += mix(uAccent, uAccent2, vUv.y) * edge * (0.22 + uPulse * 0.45 + uActPhase * 0.18);
 
-    // Cool grade so the actor belongs to the scene lighting.
-    rgb = mix(rgb, rgb * vec3(0.86, 0.97, 1.06), 0.55);
+    float sweep = fract(uTime * 0.1);
+    float band = smoothstep(0.04, 0.0, abs(vUv.y - sweep));
+    rgb += uAccent * band * 0.1;
 
-    // Rim glow, stronger on reaction.
-    rgb += uAccent * edge * (0.55 + uPulse * 0.9);
-
-    // Scanline sweep travelling up the body.
-    float sweep = fract(uTime * 0.16);
-    float band = smoothstep(0.06, 0.0, abs(vUv.y - sweep));
-    rgb += uAccent * band * 0.30;
-
-    // Fine hologram line structure.
-    float lines = sin(vUv.y * 900.0) * 0.5 + 0.5;
-    rgb += uAccent * lines * 0.028;
-
-    // Energy at the dissolve boundary.
     float boundary = smoothstep(0.42, 0.5, blend) * smoothstep(0.58, 0.5, blend);
-    rgb += uAccent * boundary * 2.2 * transition;
+    rgb += uAccent * boundary * 1.4 * transition;
 
-    // Ground fade so the feet melt into the platform glow.
-    float groundFade = smoothstep(0.0, 0.10, vUv.y);
-
+    float groundFade = smoothstep(0.0, 0.07, vUv.y);
     gl_FragColor = vec4(rgb, color.a * groundFade);
   }
 `
@@ -126,25 +161,25 @@ export const floorFragmentShader = /* glsl */ `
 
   uniform float uTime;
   uniform vec3 uAccent;
+  uniform vec3 uAccent2;
   uniform float uProgress;
 
   varying vec2 vUv;
 
   void main() {
-    // Grid that drifts toward the viewer as the page advances.
-    vec2 grid = vUv * 26.0;
-    grid.y += uTime * 0.35 + uProgress * 12.0;
+    vec2 grid = vUv * 20.0;
+    grid.y += uTime * 0.35 + uProgress * 10.0;
 
     vec2 cell = abs(fract(grid) - 0.5);
-    float line = 1.0 - smoothstep(0.0, 0.045, min(cell.x, cell.y));
+    float line = 1.0 - smoothstep(0.0, 0.035, min(cell.x, cell.y));
 
-    // Fade out toward the horizon and the edges.
-    float depthFade = smoothstep(0.0, 0.45, vUv.y) * smoothstep(1.0, 0.55, vUv.y);
-    float sideFade = smoothstep(0.0, 0.25, vUv.x) * smoothstep(1.0, 0.75, vUv.x);
+    float depthFade = smoothstep(0.0, 0.38, vUv.y) * smoothstep(1.0, 0.5, vUv.y);
+    float sideFade = smoothstep(0.0, 0.18, vUv.x) * smoothstep(1.0, 0.82, vUv.x);
 
     float glow = line * depthFade * sideFade;
+    vec3 col = mix(uAccent, uAccent2, vUv.y);
 
-    gl_FragColor = vec4(uAccent * glow, glow * 0.55);
+    gl_FragColor = vec4(col * glow, glow * 0.28);
   }
 `
 
@@ -152,15 +187,18 @@ export const glowFragmentShader = /* glsl */ `
   precision highp float;
 
   uniform vec3 uAccent;
+  uniform vec3 uAccent2;
   uniform float uPulse;
+  uniform float uActPhase;
   uniform float uTime;
 
   varying vec2 vUv;
 
   void main() {
     float d = distance(vUv, vec2(0.5));
-    float core = smoothstep(0.5, 0.0, d);
-    float breathe = 0.75 + sin(uTime * 1.4) * 0.12 + uPulse * 0.6;
-    gl_FragColor = vec4(uAccent, core * core * 0.55 * breathe);
+    float core = smoothstep(0.55, 0.0, d);
+    float breathe = 0.65 + sin(uTime * 1.2) * 0.08 + uPulse * 0.4 + uActPhase * 0.28;
+    vec3 col = mix(uAccent, uAccent2, d);
+    gl_FragColor = vec4(col, core * core * 0.32 * breathe);
   }
 `
