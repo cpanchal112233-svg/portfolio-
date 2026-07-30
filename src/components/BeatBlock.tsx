@@ -3,7 +3,6 @@ import type { Beat } from '../data/narrative'
 
 type BeatBlockProps = {
   beat: Beat
-  index: number
   isFocused: boolean
 }
 
@@ -109,24 +108,18 @@ function BeatBody({ beat }: { beat: Beat }) {
   }
 }
 
-export function BeatBlock({ beat, index, isFocused }: BeatBlockProps) {
+export function BeatBlock({ beat, isFocused }: BeatBlockProps) {
   return (
     <motion.article
       className={`beat beat-${beat.kind}${isFocused ? ' is-focused' : ''}`}
       data-beat={beat.id}
-      initial={{ opacity: 0, y: 48, filter: 'blur(14px)', scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, ease: [0.28, 0.11, 0.32, 1] }}
     >
-      <div className="beat-gutter" aria-hidden>
-        <span className="beat-index">{String(index + 1).padStart(2, '0')}</span>
-        <span className="beat-tick" />
-      </div>
-      <div className="beat-content">
-        {beat.label ? <p className="beat-label">{beat.label}</p> : null}
-        <BeatBody beat={beat} />
-      </div>
+      {beat.label ? <p className="beat-label">{beat.label}</p> : null}
+      <BeatBody beat={beat} />
     </motion.article>
   )
 }

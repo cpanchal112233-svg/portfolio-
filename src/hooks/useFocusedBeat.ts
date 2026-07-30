@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
-/** Reading line sits above the presenter dock, in the slide column on the left. */
+/** Reading line sits above the caption, in the reading column on the left. */
 function readingLine() {
   const viewport = window.innerHeight
-  const dock = document.querySelector('.presenter-dock')
+  const dock = document.querySelector('.caption-dock')
 
   if (dock) {
     const rect = dock.getBoundingClientRect()
