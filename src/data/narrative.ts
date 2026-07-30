@@ -460,11 +460,12 @@ export const beats: Beat[] = [
     section: 'resume',
     kind: 'channel',
     label: 'Full document',
-    text: 'Open the full resume',
-    detail: 'Formatted HTML version, kept in sync with this site',
-    href: '/Chintan-Panchal-Resume.html',
+    text: 'Download the CV (PDF)',
+    detail:
+      'Print-ready A4 with clickable links. Web version: /Chintan-Panchal-Resume.html',
+    href: '/Chintan-Panchal-CV.pdf',
     external: true,
-    narration: 'Open the full document here whenever you are ready.',
+    narration: 'Grab the PDF here — every link in it stays clickable.',
     emphasis: 'invite',
   },
 
