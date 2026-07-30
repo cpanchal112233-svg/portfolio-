@@ -6,7 +6,6 @@ const ActorScene = lazy(() =>
   import('../three/ActorScene').then((module) => ({ default: module.ActorScene }))
 )
 
-/** Mirrors the pose map so the fallback never pulls three.js into the main bundle. */
 const FALLBACK_POSES: Record<Emphasis, string> = {
   welcome: '/actor/about.webp',
   point: '/actor/projects.webp',
@@ -28,10 +27,10 @@ function hasWebGL() {
   }
 }
 
-function StaticActor({ emphasis }: { emphasis: Emphasis }) {
+function StaticActor({ emphasis, variant }: { emphasis: Emphasis; variant: 'background' | 'panel' }) {
   return (
-    <div className="actor-static">
-      <img alt="3D avatar of Chintan Panchal" src={FALLBACK_POSES[emphasis]} />
+    <div className={variant === 'background' ? 'actor-static actor-static-bg' : 'actor-static'}>
+      <img alt="Chintan Panchal presenting" src={FALLBACK_POSES[emphasis]} />
     </div>
   )
 }
@@ -41,9 +40,16 @@ type ActorStageProps = {
   emphasis: Emphasis
   beatKey: string
   beatIndex: number
+  variant?: 'background' | 'panel'
 }
 
-export function ActorStage({ progressRef, emphasis, beatKey, beatIndex }: ActorStageProps) {
+export function ActorStage({
+  progressRef,
+  emphasis,
+  beatKey,
+  beatIndex,
+  variant = 'panel',
+}: ActorStageProps) {
   const [enabled, setEnabled] = useState(false)
 
   const reducedMotion = useMemo(
@@ -56,23 +62,28 @@ export function ActorStage({ progressRef, emphasis, beatKey, beatIndex }: ActorS
   useEffect(() => {
     if (reducedMotion) return
     if (!hasWebGL()) return
-    // Mount the scene after first paint so the portfolio content is never blocked.
     const id = window.requestAnimationFrame(() => setEnabled(true))
     return () => window.cancelAnimationFrame(id)
   }, [reducedMotion])
 
+  const canvasClass =
+    variant === 'background' ? 'actor-canvas actor-canvas-bg' : 'actor-canvas'
+
   if (!enabled) {
     return (
-      <div className="actor-canvas">
-        <StaticActor emphasis={emphasis} />
+      <div className={canvasClass}>
+        <StaticActor emphasis={emphasis} variant={variant} />
       </div>
     )
   }
 
   return (
-    <div className="actor-canvas">
-      <ErrorBoundary fallback={<StaticActor emphasis={emphasis} />} onError={() => setEnabled(false)}>
-        <Suspense fallback={<StaticActor emphasis={emphasis} />}>
+    <div className={canvasClass}>
+      <ErrorBoundary
+        fallback={<StaticActor emphasis={emphasis} variant={variant} />}
+        onError={() => setEnabled(false)}
+      >
+        <Suspense fallback={<StaticActor emphasis={emphasis} variant={variant} />}>
           <ActorScene
             progressRef={progressRef}
             emphasis={emphasis}

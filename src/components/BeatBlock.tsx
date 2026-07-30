@@ -114,10 +114,10 @@ export function BeatBlock({ beat, index, isFocused }: BeatBlockProps) {
     <motion.article
       className={`beat beat-${beat.kind}${isFocused ? ' is-focused' : ''}`}
       data-beat={beat.id}
-      initial={{ opacity: 0, y: 38, filter: 'blur(12px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y: 48, filter: 'blur(14px)', scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="beat-gutter" aria-hidden>
         <span className="beat-index">{String(index + 1).padStart(2, '0')}</span>

@@ -1,33 +1,20 @@
 import { useEffect, useState } from 'react'
 
-/**
- * Returns the y position that counts as "being read". On the stacked layout the
- * actor sits above the text, so the reading line moves below the stage.
- */
+/** Reading line sits above the presenter dock, in the slide column on the left. */
 function readingLine() {
   const viewport = window.innerHeight
-  const stage = document.querySelector('.stage')
+  const dock = document.querySelector('.presenter-dock')
 
-  if (stage) {
-    const rect = stage.getBoundingClientRect()
-    const stacked = rect.width > window.innerWidth * 0.8
-    if (stacked) {
-      // Keep the line inside the text column below the actor, and never let a
-      // tall stage push it off the bottom of the screen. Sitting slightly above
-      // the middle of the column matches where people actually read.
-      const columnTop = Math.min(rect.bottom, viewport * 0.72)
-      return columnTop + (viewport - columnTop) * 0.42
-    }
+  if (dock) {
+    const rect = dock.getBoundingClientRect()
+    const top = Math.max(viewport * 0.28, 120)
+    const bottom = Math.max(rect.top - viewport * 0.1, top + 80)
+    return top + (bottom - top) * 0.48
   }
 
-  return viewport / 2
+  return viewport * 0.44
 }
 
-/**
- * Layout position in document space. Uses offsetTop rather than a client rect
- * because the stream carries a scroll-velocity transform, and a transformed rect
- * would shift each line by a different amount and mis-report the focused line.
- */
 function documentTop(node: HTMLElement) {
   let top = 0
   let current: HTMLElement | null = node
@@ -38,14 +25,6 @@ function documentTop(node: HTMLElement) {
   return top
 }
 
-/**
- * Tracks the single line closest to the reading line so the actor can react to
- * every individual line rather than whole sections.
- *
- * Distance is measured instead of intersection ratio: ratio is relative to each
- * element's own height, which would let a short neighbour outrank the tall line
- * the reader is actually on.
- */
 export function useFocusedBeat(ids: string[], initial: string) {
   const [focusedId, setFocusedId] = useState(initial)
 
@@ -56,7 +35,6 @@ export function useFocusedBeat(ids: string[], initial: string) {
 
     if (nodes.length === 0) return
 
-    // Only on-screen lines get measured, keeping the scroll handler cheap.
     const onScreen = new Set<HTMLElement>()
     let frame = 0
 
@@ -72,7 +50,6 @@ export function useFocusedBeat(ids: string[], initial: string) {
         const bottom = top + node.offsetHeight
         const centre = top + node.offsetHeight / 2
         const spansLine = top <= line && bottom >= line
-        // A line crossing the reading line always wins over one merely near it.
         const score = spansLine
           ? Math.abs(centre - line) * 0.001
           : Math.abs(centre - line)
