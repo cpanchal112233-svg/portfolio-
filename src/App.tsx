@@ -85,13 +85,19 @@ function App() {
 
       <div className="deck-body">
         <main className="stream">
-          {beatsBySection.map(({ section, items }) => (
-            <section className="chapter" id={section.id} key={section.id}>
-              <div className="chapter-head">
-                <span className="chapter-index">{section.index}</span>
-                <h2 className="chapter-title">{section.title}</h2>
-                <p className="chapter-sub">{section.subtitle}</p>
-              </div>
+          {beatsBySection.map(({ section, items }, chapterIndex) => (
+            <section
+              className={chapterIndex === 0 ? 'chapter chapter-hero' : 'chapter'}
+              id={section.id}
+              key={section.id}
+            >
+              {chapterIndex === 0 ? null : (
+                <div className="chapter-head">
+                  <span className="chapter-index">{section.index}</span>
+                  <h2 className="chapter-title">{section.title}</h2>
+                  <p className="chapter-sub">{section.subtitle}</p>
+                </div>
+              )}
 
               <div className="chapter-beats">
                 {items.map((beat) => (
