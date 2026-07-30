@@ -231,8 +231,12 @@ function CameraRig({
     const fit = THREE.MathUtils.clamp((1.45 - aspect) / 0.95, 0, 1)
 
     const orbit = staging.orbit + Math.sin(progress * Math.PI * 2) * 0.15
-    const distance = (staging.distance - progress * 0.18) * (1 + fit * 0.9)
-    const height = staging.height + Math.sin(progress * Math.PI) * 0.15 + fit * 0.3
+    // Portrait phones open with a hero peek band — pull in a little and aim
+    // higher so the upper body fills that clear top region.
+    const distance =
+      (staging.distance - progress * 0.18) * (1 + fit * 0.55)
+    const height =
+      staging.height + Math.sin(progress * Math.PI) * 0.15 + fit * 0.55
 
     // Wide layouts keep the reading column on the left, so truck the whole rig
     // left to park the presenter in the clear space beside it. Narrow layouts
@@ -247,8 +251,9 @@ function CameraRig({
     camera.position.y += (height - camera.position.y) * lerp
     camera.position.z += (desiredZ - camera.position.z) * lerp
 
+    const lookY = 0.15 + fit * 0.55 + Math.sin(state.clock.elapsedTime * 0.45) * 0.025
     target.x += (ACTOR_X + frameShift - target.x) * lerp
-    target.y += (0.15 + Math.sin(state.clock.elapsedTime * 0.45) * 0.025 - target.y) * lerp
+    target.y += (lookY - target.y) * lerp
     camera.lookAt(target)
   })
 
