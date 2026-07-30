@@ -53,7 +53,7 @@ export const profile = {
   portfolioUrl: 'https://portfolio-pied-nu-0jzr70914a.vercel.app',
   githubTaruRepo: 'https://github.com/cpanchal112233-svg/TARU-',
   githubPortfolioRepo: 'https://github.com/cpanchal112233-svg/portfolio-',
-  resumeHref: '/Chintan-Panchal-Resume.html',
+  resumeHref: '/Chintan-Panchal-CV.pdf',
 }
 
 export const sections: SectionMeta[] = [
